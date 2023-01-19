@@ -41,12 +41,8 @@ class New_profileListView(LoginRequiredMixin, ListView):
         return New_profile.objects.filter(author=self.request.user)
 
 def index(request):
-    return HttpResponse('ok')
-
-
-def new_profile(request):
+    print('here')
     return HttpResponseRedirect('https://ya.ru/')
-
 
 def product_info(request):
     return HttpResponse(content=b'Item list', status=404)
