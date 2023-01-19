@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Ваш профиль</title>
+    </head>
+        {% for new_profile in object_list %}
+        <h1>Ваш профиль: {{ new_profile.author }}</h1>
+            <li>Имя: {{ new_profile.name }}</li>
+            <li>Фамилия: {{ new_profile.surname }}</li>
+            <li>Имя профиля: {{ new_profile.username }}</li>
+            <li>Почта: {{ new_profile.email }}</li>
+        {% empty %}
+            <h3>Ваши данные не найдены.</h3>
+            <a href="/new_profile/add">Регистрация</a>
+        {% endfor %}
+
+    </body>
+</html>

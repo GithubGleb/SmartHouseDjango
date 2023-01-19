@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Заполните данные для регистрации</title>
+    </head>
+    <br>
+        <h1>Заполните данные для регистрации</h1>
+        <form method="post" enctype="multipart/form-data" action="new_profile/add">
+            {% csrf_token %}
+            {{ form }}
+            <input class="bn632-hover bn20" id="submit" type="submit">
+        </form>
+    </body>
+</html>

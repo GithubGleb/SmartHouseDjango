@@ -6,7 +6,6 @@
     </head>
     <body>
         <h1>Вход</h1>
-
         {% if next %}
         <form action="/login/?next={{next}}" method="post">
         {%else%}
@@ -17,5 +16,6 @@
 
             <input id="submit-btn" type="submit" value="Отправить">
         </form>
+        <h3>Тестовый аккаунт</h3><h4> unam: test <br> passw: root</br> </h4>
     </body>
 </html>
