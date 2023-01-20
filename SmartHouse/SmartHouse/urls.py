@@ -16,12 +16,14 @@ Including another URLconf
 # from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
-from core.views import index, product_info
+from core.views import index, paginationproduct
 
 urlpatterns = [
     path('index/', index),
     # path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view()),
-    path('new_profile/', include('core.urls')),
-    path('product_info/', product_info)
+    path('profile/', include('core.urls')),
+    path('product/', paginationproduct),
+    path('accounts/profile/', include('core.urls')),
+    path('', index)
 ]

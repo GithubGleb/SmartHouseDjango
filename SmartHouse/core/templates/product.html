@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% for i in page %}
+    <ul>
+        <li>{{ i }}</li>
+    </ul>
+    {% endfor %}
+    {% if page.has_previous %}
+    <a href="?page={{page.previous_page_number}}">Назад</a>
+    {% endif %}
+    {% if page.has_next %}
+    <a href="?page={{page.next_page_number}}">Вперед</a>
+    {% endif %}
+</head>
+<body>
+
+</body>
+</html>
