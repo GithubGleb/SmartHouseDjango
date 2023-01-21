@@ -16,7 +16,7 @@ Including another URLconf
 # from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
-from core.views import index, paginationproduct
+from core.views import index, paginationproduct, add_product, get_all_profile
 
 urlpatterns = [
     path('index/', index),
@@ -24,6 +24,8 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view()),
     path('profile/', include('core.urls')),
     path('product/', paginationproduct),
+    path('add_product/', add_product),
     path('accounts/profile/', include('core.urls')),
-    path('', index)
+    path('all_list/', get_all_profile),
+    path('', index),
 ]

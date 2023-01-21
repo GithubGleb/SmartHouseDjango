@@ -6,8 +6,9 @@ from .forms import Userdatainput
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
-from .models import New_profile
+from .models import New_profile, Products, Controler
 from django.core.paginator import Paginator
+import datetime
 
 
 class new_profileView(LoginRequiredMixin, CreateView):
@@ -65,3 +66,37 @@ def paginationproduct(request):
 
 def product_info(request):
     return HttpResponse(content=b'Item list', status=404)
+
+
+def add_product(request):
+    # products = Products(name='Жалюзи Пересвет', model='Л-2', condition='True')
+    # products.save()
+    g = datetime.date.today()
+    pro = New_profile(name='Генри',
+                      surname='Актоев',
+                      username='GanryAkto',
+                      email='GenryAkto@include.com',
+                      feedback='none',
+                      grade='3',
+                      author_id='1'
+                      # date=g
+                      )
+    pro.save()
+    # return render(request, 'add_product.html')
+    return HttpResponse('Всё хорошо')
+
+
+def get_all_profile(request):
+    prof = New_profile.objects.all()
+    prod = Products.objects.all()
+    # prof_list = [f'{p.name}, {p.surname}' for p in prof]
+    # print(prof_list)
+    paginator = range(9)
+    context = {
+        'paginator': paginator,
+        'paginator': paginator,
+        # 'prof': prof,
+    }
+    print(context)
+    return render(request, 'all_list.html', context)
+
