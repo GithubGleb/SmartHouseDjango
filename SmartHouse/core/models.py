@@ -11,21 +11,21 @@ class New_profile(models.Model):
     email = models.EmailField(verbose_name='Почта', max_length=30)
     feedback = models.CharField(verbose_name='Пожелания, предложения', max_length=5000)
     grade = models.IntegerField(verbose_name='Оценка')
-    # date = models.DateField(verbose_name='Дата регистрации', max_length=10)
+    # date = models.DateTimeField(auto_now_add=True, verbose_name='Дата регистрации', max_length=10)
 
 
 class Controler(models.Model):
     controller = models.ForeignKey(New_profile, on_delete=models.CASCADE)
     model = models.CharField(verbose_name='Модель', max_length=10)
-    # date = models.DateField(verbose_name='Дата приобритения', max_length=10)
+    # date = models.DateField(auto_now_add=True, verbose_name='Дата приобритения', max_length=10)
 
 
 class Products(models.Model):
     products = models.ForeignKey(Controler, on_delete=models.CASCADE)
     name = models.CharField(verbose_name='Устройство', max_length=20)
     model = models.CharField(verbose_name='Модель', max_length=10)
-    condition = models.BooleanField(verbose_name='Состояние', max_length=10)
-    # date_install = models.DateField(verbose_name='Дата установки', max_length=30)
+    condition = models.CharField(verbose_name='Состояние', max_length=10)
+    # date_install = models.DateTimeField(auto_now_add=True,  verbose_name='Дата установки', max_length=30)
 
 
 

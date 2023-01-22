@@ -71,7 +71,7 @@ def product_info(request):
 def add_product(request):
     # products = Products(name='Жалюзи Пересвет', model='Л-2', condition='True')
     # products.save()
-    g = datetime.date.today()
+    # g = datetime.date.today()
     pro = New_profile(name='Генри',
                       surname='Актоев',
                       username='GanryAkto',
@@ -88,14 +88,13 @@ def add_product(request):
 
 def get_all_profile(request):
     prof = New_profile.objects.all()
-    prod = Products.objects.all()
+    # prod = Products.objects.all()
     # prof_list = [f'{p.name}, {p.surname}' for p in prof]
     # print(prof_list)
-    paginator = range(9)
     context = {
-        'paginator': paginator,
-        'paginator': paginator,
-        # 'prof': prof,
+        # 'prof': prof_list,
+        # 'prod': prod,
+        'prof': prof,
     }
     print(context)
     return render(request, 'all_list.html', context)
