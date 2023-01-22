@@ -89,13 +89,10 @@ def add_product(request):
 def get_all_profile(request):
     prof = New_profile.objects.all()
     # prod = Products.objects.all()
-    # prof_list = [f'{p.name}, {p.surname}' for p in prof]
-    # print(prof_list)
+    prof_list = [f'{p.name}, {p.surname}' for p in prof]
+    print(prof_list)
     context = {
-        # 'prof': prof_list,
-        # 'prod': prod,
-        'prof': prof,
+        'prof': prof_list,
     }
-    print(context)
     return render(request, 'all_list.html', context)
 
