@@ -80,8 +80,7 @@ def add_product(request):
                       grade='3',
                       author_id='1'
                       # date=g
-                      )
-    pro.save()
+                      ).save()
     # return render(request, 'add_product.html')
     return HttpResponse('Всё хорошо')
 
