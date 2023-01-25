@@ -10,7 +10,7 @@ class AssemblingInlie(admin.TabularInline):
 
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'model', 'condition']
+    list_display = ['id', 'user', 'prod', 'name', 'model', 'condition']
     list_filter = ['condition']
     pass
 
@@ -38,6 +38,9 @@ class CreateAssemblingAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(Assembling)
+class AssemblingAdmin(admin.ModelAdmin):
+    pass
 
 
 
