@@ -45,3 +45,9 @@ class Assembling(models.Model):
     creass = models.ForeignKey(CreateAssembling, related_name='assem', on_delete=models.CASCADE)
     quant = models.IntegerField()
 
+
+class ProductStat(models.Model):
+    products = models.ForeignKey(Products, verbose_name='Продукт', on_delete=models.CASCADE)
+    name = models.CharField(verbose_name="Название", max_length=20)
+    number = models.CharField(verbose_name="Номер", max_length=8)
+    price = models.DecimalField(verbose_name="Цена", decimal_places=3, max_digits=20)

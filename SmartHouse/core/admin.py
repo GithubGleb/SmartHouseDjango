@@ -1,6 +1,6 @@
 # Register your models here.
 from django.contrib import admin
-from .models import New_profile, Controler, Products, CreateAssembling, Assembling
+from .models import New_profile, Controler, Products, CreateAssembling, Assembling, ProductStat
 
 
 class AssemblingInlie(admin.TabularInline):
@@ -43,4 +43,6 @@ class AssemblingAdmin(admin.ModelAdmin):
     pass
 
 
-
+@admin.register(ProductStat)
+class ProductStatAdmin(admin.ModelAdmin):
+    list_display = ['id', 'products', 'name', 'number', 'price']
