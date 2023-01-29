@@ -16,7 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
-from core.views import index, paginationproduct, add_product, get_all_profile, ProductView, ProductsView
+from core.views import index, paginationproduct, add_product, get_all_profile, ProductView, ProductsView, CommentsViewSet
+from rest_framework.routers import DefaultRouter
+
+r = DefaultRouter()
+r.register('comments', CommentsViewSet)
+
 
 urlpatterns = [
     path('index/', index),
@@ -30,4 +35,4 @@ urlpatterns = [
     path('api/productinfo/v1/', ProductsView.as_view()),
     path('api/productinfo/v1/<pk>/', ProductView.as_view()),
     path('', index),
-]
+] + r.urls

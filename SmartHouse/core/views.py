@@ -5,12 +5,15 @@ from .forms import Userdatainput
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
-from .models import New_profile, Products, Controler, ProductStat
+from .models import New_profile, Products, Controler, ProductStat, Comment
 from django.core.paginator import Paginator
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.views import Response
-from .serializers import ProductStatSerializer
-
+from rest_framework.viewsets import ModelViewSet
+from .serializers import ProductStatSerializer, CommentSerializer
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.pagination import LimitOffsetPagination
 
 class new_profileView(LoginRequiredMixin, CreateView):
     model = New_profile
@@ -111,3 +114,13 @@ class ProductsView(ListAPIView):
 class ProductView(RetrieveAPIView):
     queryset = ProductStat.objects.all()
     serializer_class = ProductStatSerializer
+
+
+class CommentsViewSet(ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    # filterset_fields = ['user']
+    search_fields = ['text', ]
+    ordering_fields = ['id', 'user', 'text', 'date']
+    pagination_class = LimitOffsetPagination
