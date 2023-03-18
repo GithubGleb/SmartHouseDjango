@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Блог</title>
+</head>
+<body style="background-color: #01241c">
+<style>
+    a {
+    text-decoration: none;
+    color: #e5eaf5;
+    }
+    a : hover {
+    font-size: 30px;
+    }
+</style>
+    <div style="text-align: center">
+        <p style="font-size: 40px; color: #f3f5fa">Блог</p>
+    </div>
+    {% for post in items %}
+    <div style="margin: 30px; display: inline-block">
+        <div style="width: 285px; border: 1px solid; border-radius: 10px; background-color: #220006; color: #e5eaf5; display: inline-block">
+            <a href="{% url 'post' post_pk=post.pk %}"><div>
+                <div style="margin: 15px; text-align: center">{{ post.title }}</div>
+                <div style="border-bottom: 1px solid"></div>
+            </div></a>
+            <div style="border-bottom: 1px solid"></div>
+            <div style="margin: 10px">
+                <div>{{ post.username }}</div>
+                <div style="text-align: right">{{ post.date }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+    <div>
+        <form action="{% url 'new_post' %}" style="width: 100px; margin: 0 auto">
+            <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="Cоздать пост" />
+        </form>
+    </div>
+</body>
+</html>

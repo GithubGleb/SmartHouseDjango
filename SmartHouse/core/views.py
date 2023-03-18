@@ -23,11 +23,9 @@ class new_profileView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
-
     # def get(self, request):
     #     form = Userdatainput()
     #     return render(request, 'new_profile.html', {'form': form})
-    #
     # def post(self, request):
     #     form = Userdatainput(request.POST)
     #     if form.is_valid():
@@ -66,6 +64,21 @@ def paginationproduct(request):
         'paginator': paginator,
     }
     return render(request, 'product.html', context)
+
+def infouser(request):
+    name = New_profile.name
+    surname = New_profile.surname
+    username = New_profile.username
+    email = New_profile.email
+    context = {
+        'new_profile.author': author[0],
+        'new_profile.name': name,
+        'new_profile.surname': surname,
+        'new_profile.username': username,
+        'new_profile.email': email,
+    }
+    # print(context)
+    return render(request, 'new_profile_list.html', context)
 
 
 def product_info(request):

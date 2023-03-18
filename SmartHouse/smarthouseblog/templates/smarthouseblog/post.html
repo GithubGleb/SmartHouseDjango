@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Блог</title>
+</head>
+<body style="background-color: #01241c">
+<style>
+    a {
+    text-decoration: none;
+    color: #e5eaf5;
+    }
+    a : hover {
+    font-size: 30px;
+    }
+</style>
+    <div style="text-align: center">
+
+        <p style="font-size: 40px; color: #f3f5fa">Блог</p>
+    </div>
+
+    <div style="margin: 30px; display: inline-block">
+        <form action="{% url 'posts' %}" style="margin-bottom: 30px; width: 1340px">
+            <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="К постам" />
+        </form>
+    <div style="width: 1px; margin: 0 auto">
+        <div style="align-items: center; width: 285px; border: 1px solid; border-radius: 10px; background-color: #220006; color: #e5eaf5; display: inline-block">
+            <div>
+                <div style="text-align: center">{{ item.date }}</div>
+                <div style="margin: 15px; text-align: left">{{ item.title }}</div>
+                <div style="border-bottom: 1px solid"></div>
+                <div style="margin: 16px">{{ item.text }}</div>
+            </div>
+            <div style="border-bottom: 1px solid"></div>
+            <div style="margin: 10px">
+                <div style="text-align: center">{{ item.username }}</div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!--        {% for i in items%}-->
+
+<!--        <div style="margin: 20px"></div>-->
+<!--        {% endfor %}-->
+    </div>
+</body>
+</html>
