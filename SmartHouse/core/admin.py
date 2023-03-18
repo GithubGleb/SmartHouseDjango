@@ -1,7 +1,7 @@
 # Register your models here.
 from django.contrib import admin
 from .models import New_profile, Controler, Products, CreateAssembling, Assembling, ProductStat
-from smarthouseblog.models import Blog
+
 
 class AssemblingInlie(admin.TabularInline):
     model = Assembling
@@ -48,6 +48,3 @@ class ProductStatAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'number', 'price']
 
 
-@admin.register(Blog)
-class BlogAdmin(admin.ModelAdmin):
-    list_display = ['id', 'username', 'title', 'text', 'date', 'date_publication']
