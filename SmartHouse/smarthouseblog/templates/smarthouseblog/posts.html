@@ -14,29 +14,43 @@
     font-size: 30px;
     }
 </style>
-    <div style="text-align: center">
-        <p style="font-size: 40px; color: #f3f5fa">Блог</p>
-    </div>
-    {% for post in items %}
-    <div style="margin: 30px; display: inline-block">
-        <div style="width: 285px; border: 1px solid; border-radius: 10px; background-color: #220006; color: #e5eaf5; display: inline-block">
-            <a href="{% url 'post' post_pk=post.pk %}"><div>
-                <div style="margin: 15px; text-align: center">{{ post.title }}</div>
-                <div style="border-bottom: 1px solid"></div>
-            </div></a>
-            <div style="border-bottom: 1px solid"></div>
-            <div style="margin: 10px">
-                <div>{{ post.username }}</div>
-                <div style="text-align: right">{{ post.date }}</div>
-            </div>
+    <div style="margin: 0 auto; display: inline-block">
+        <div style="text-align: center">
+            <p style="margin: 50px; font-size: 40px; color: #f3f5fa">Блог</p>
         </div>
-        {% endfor %}
-    </div>
-    </div>
-    <div>
+        <div>
+            {% for post in items %}
+            <div style="display: inline-block;
+                        margin: 10px;
+                        width: 280px;
+                        height: 150px;
+                        border: 1px solid;
+                        border-radius: 10px;
+                        background-color: #220006;
+                        color: #e5eaf5">
+                    <a href="{% url 'post' post_pk=post.pk %}">
+                        <div style="margin: 15px; text-align: center">{{ post.title }}</div>
+                        <div style="border-bottom: 1px solid"></div>
+                    </a>
+                        <div style="border-bottom: 1px solid"></div>
+                    <div style="margin: 11px">
+                        <div style="margin-bottom: 10px">{{ post.username }}</div>
+                        <div style="text-align: left">Размещено: {{ post.date }}</div>
+
+                    {% if post.date != post.date_publication %}
+                        <div style="text-align: left">Изменено: {{ post.date_publication }}</div>
+                    {% else %}
+                        <center><div style="margin-top: -1px">-</div></center>
+                    {% endif %}
+                    </div>
+            </div>
+            {% endfor %}
+        </div>
+    <div style="margin: 10px">
         <form action="{% url 'new_post' %}" style="width: 100px; margin: 0 auto">
             <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="Cоздать пост" />
         </form>
+    </div>
     </div>
 </body>
 </html>

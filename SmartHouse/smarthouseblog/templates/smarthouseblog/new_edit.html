@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Новая публикация</title>
+    <title>Редактирование публикации</title>
 </head>
 <body style="background-color: #01241c">
 <style>
@@ -16,7 +16,7 @@
 </style>
     <a href="{% url 'posts' %}">
     <div style="text-align: center">
-        <p style="margin: 70px; font-size: 40px; color: #f3f5fa">Новая публикация</p>
+        <p style="margin: 70px; font-size: 40px; color: #f3f5fa">Редактировать пост</p>
     </div>
     </a>
     <div style="padding-left: 30px; display: inline-block">
@@ -34,6 +34,7 @@
             <form action="" method="POST"  style="margin: 10px">{% csrf_token %}
                 {{form.as_p}}
                 <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="Опубликовать" />
+                <a href="{% url 'post_delete' post_pk=request.path %}" style="width: 600px; border-radius: 2px;  background-color: #e5eaf5; color: #220006" value="Удалить" />Удалить</a>
             </form>
          </div>
     </div>

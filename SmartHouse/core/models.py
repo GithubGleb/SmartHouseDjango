@@ -23,6 +23,7 @@ class Controler(models.Model):
     def __str__(self):
         return f'{self.model}'
 
+
 class Products(models.Model):
     user = models.ForeignKey(New_profile, on_delete=models.CASCADE, verbose_name='Пользователь', default='2')
     prod = models.ForeignKey(Controler, verbose_name='Контроллер', on_delete=models.CASCADE, related_name='system_sh',
@@ -35,14 +36,12 @@ class Products(models.Model):
         return f'{self.name}'
 
 
-
 class CreateAssembling(models.Model):
     # contr = models.ManyToManyField(Controler, related_name='asses', verbose_name='Контроллер')
     # produ = models.ManyToManyField(Products, related_name='asses', verbose_name='Устройство')
     pass
 
 
-# Промежуточная Products & CreateAsse
 class Assembling(models.Model):
     user = models.ForeignKey(New_profile, related_name='assem', on_delete=models.CASCADE,
                              verbose_name='Пользователь', default='2')
@@ -57,8 +56,6 @@ class ProductStat(models.Model):
     name = models.CharField(verbose_name="Название", max_length=20)
     number = models.CharField(verbose_name="Номер", max_length=8)
     price = models.DecimalField(verbose_name="Цена", decimal_places=3, max_digits=20)
-
-
 
 
 class Comment(models.Model):
