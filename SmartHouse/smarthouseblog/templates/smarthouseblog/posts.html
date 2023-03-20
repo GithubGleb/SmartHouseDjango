@@ -14,11 +14,57 @@
     font-size: 30px;
     }
 </style>
-    <div style="margin: 0 auto; display: inline-block">
-        <div style="text-align: center">
-            <p style="margin: 50px; font-size: 40px; color: #f3f5fa">Блог</p>
+    <div style="position: fixed; left: 1290px">
+            <a href = "{% url 'posts' %}"><p style="margin: 50px; font-size: 40px; color: #f3f5fa">Категории</p></a>
+        <div style="display: inline-block;
+                        margin: 39px;
+                        right: 100px;
+                        position: fixed;
+                        width: 280px;
+                        height: 150px;
+                        border: 1px solid;
+                        border-radius: 10px;
+                        background-color: #220006;
+                        color: #e5eaf5;">
+            <div>
+                {% for i in category %}
+                <div style="text-align: center;
+
+                        height: 10px;
+                        border-radius: 10px;
+                        background-color: #220006;
+                        color: #e5eaf5">
+
+                    <div style="margin: 17px; text-align: center">
+                        <a href="{% url 'categories' categories_pk=i.pk %}">{{ i }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
         </div>
-        <div>
+    </div>
+    <div style="display: inline-block; margin: 1 auto; position: absolute;width: 1200px">
+        <div style="text-align: center">
+            <a href = "{% url 'posts' %}"><p style="margin: 50px; font-size: 40px; color: #f3f5fa">Блог</p></a>
+        </div>
+
+        {% if request.build_absolute_uri == 'http://127.0.0.1:8000/posts/' %}
+            <div style="margin: 10px">
+                <form action="{% url 'posts_false' %}" style="width: 125px; margin: 0 auto">
+                    <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="Не опубликованные" />
+                </form>
+            </div>
+        {% else %}
+
+            <div style="margin: 10px">
+                <form action="{% url 'posts' %}" style="width: 125px; margin: 0 auto">
+                    <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="Опубликованные" />
+                </form>
+            </div>
+        {% endif %}
+
+    <div style="margin: 0 auto">
             {% for post in items %}
             <div style="display: inline-block;
                         margin: 10px;
@@ -50,7 +96,11 @@
         <form action="{% url 'new_post' %}" style="width: 100px; margin: 0 auto">
             <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="Cоздать пост" />
         </form>
+
     </div>
     </div>
+
+
+
 </body>
 </html>
