@@ -14,7 +14,6 @@
     font-size: 30px;
     }
 </style>
-
     <a href="{% url 'posts' %}">
         <div style="text-align: center">
             <p style=" font-size: 40px; color: #f3f5fa">{{ post.title }}</p>
@@ -22,17 +21,29 @@
         <div style="text-align: center">
             <p style="font-size: 20px; color: #f3f5fa">Категория: {{ post.category }}</p>
         </div>
+        <div style="text-align: center">
+            <p style="font-size: 20px; color: #f3f5fa">Рейтинг: {{ rai }}</p>
+        </div>
     </a>
-    <a></a>
-    <div style="margin: 30px; display: inline-block">
-        <form action="{% url 'posts' %}" style="margin-bottom: 30px; width: 1340px">
-            <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="К постам" />
+
+    <div>
+        <form action="{% url 'posts' %}" style="margin-bottom: 50px">
+            <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="К постам" /></input>
         </form>
-    <div style="width: 1px; margin: 0 auto">
-        <div style="align-items: center; width: 285px; border: 1px solid; border-radius: 10px; background-color: #220006; color: #e5eaf5; display: inline-block">
+    </div>
+
+    <div style="width: 430px; margin: 0 auto; heigth: 200px">
+        <div style="align-items: center;
+                    width: 285px;
+                    border: 1px solid;
+                    border-radius: 10px;
+                    background-color: #220006;
+                    color: #e5eaf5;
+                    display: inline-block">
             <div>
                 <div style="text-align: center">{{ post.date }}</div>
-                <div style="margin: 15px; text-align: left">{{ post.title }}</div>
+                <div style="margin: 15px;
+                            text-align: left">{{ post.title }}</div>
                 <div style="border-bottom: 1px solid"></div>
                 <div style="margin: 16px">{{ post.text }}</div>
             </div>
@@ -43,14 +54,21 @@
         </div>
     </div>
     </div>
-    <div style="margin: 0 auto;     width: 400px">
+    <div style="margin: 0 auto; width: 400px">
         <form action="{% url 'post_edit' post_pk=post.pk %}" style="display: inline-block;
                         margin: 10px">
             <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="Редактировать" />
         </form>
-        <form action="{% url 'post_delete' post_pk=post.pk %}" method=""  style="margin: 0 auto; display: inline-block;display: inline-block;
-                        margin: 10px">
-                <input type="submit" style="width: 107px; border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="Удалить" />
+        <form action="{% url 'post_delete' post_pk=post.pk %}" method=""
+              style="margin: 0 auto;
+                     display: inline-block;display: inline-block;
+                     margin: 10px">
+                <input type="submit"
+                       style="width: 107px;
+                       border-radius: 4px;
+                       background-color: #e5eaf5;
+                       color: #220006"
+                       value="Удалить" />
         </form>
         {% if post.status == False %}
         <form action="{% url 'post_publick' post_pk=post.pk %}" method=""  style="margin: 0 auto; display: inline-block; display: inline-block;
@@ -62,6 +80,22 @@
     <div>
         <p style="margin: 15px; font-size: 40px; color: #f3f5fa">Коментариев: {{ count_comm }}</p>
     </div>
+<div style="margin: 25px;
+    width: 355px;
+    height:190px;
+    position:absolute;
+    left:570px;
+    bottom: 120px;
+    border: 1px solid;
+    border-radius: 10px;
+    background-color: #220006;
+    color: #e5eaf5;
+    display: inline-block;">
+    <form style="margin: 10px" action="" method="POST"  >{% csrf_token %}
+            <div style="margin: 10px">{{ comment_form }}</div>
+        <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006; margin: 10px" value="Отправить" />
+    </form>
+</div>
 {% for i in comm %}
     <div style="align-items: center;
     width: 285px;
@@ -70,7 +104,8 @@
     background-color: #220006;
     color: #e5eaf5;
     display: inline-block;
-    height: 160px;">
+    height: 200px;
+    margin-top: 19px;">
 
     <div style="border-bottom: 1px solid">
 
@@ -79,13 +114,19 @@
 
     <div style="border-top: 1px solid">
             <div style="height: 50px;text-align: left; margin: 15px;">Коментарий: {{ i.comment }}</div>
+            <div style="text-align: left; margin: 15px;">Оценка: {{ i.raiting }}</div>
+    </div>
+    <div style="border-top: 1px solid">
+
     </div>
     <div>
-        <div style="text-align: center; margin: 20px;">{{ i.date }}</div>
+        <div style="text-align: center; margin: 10px;">{{ i.date }}</div>
     </div>
 
 
         {% endfor %}
+
+
     </div>
 <div>
     <div style="height: 100px"></div>

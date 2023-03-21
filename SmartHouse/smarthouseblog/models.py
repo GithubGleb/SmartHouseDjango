@@ -16,6 +16,7 @@ class Blog(models.Model):
     status = models.BooleanField(default=False, verbose_name='Опубликовать')
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.PROTECT, default='2')
     date_publication = models.DateTimeField(auto_now_add=True)
+    raiting = models.FloatField(verbose_name='Рейтинг')
 
     def __str__(self):
         # context = f'{self.title},{self.text},{self.username},{self.date}'
@@ -27,8 +28,12 @@ class Comments(models.Model):
     username = models.ForeignKey(New_profile, verbose_name='Юзернейм', on_delete=models.PROTECT, default='2')
     date = models.DateTimeField(auto_now_add=True)
     comment = models.TextField(max_length=224, verbose_name='Коментарий')
+    raiting = models.IntegerField(
+        verbose_name='Рейтинг'
+    )
     #username = models.ForeignKey("auth.User", on_delete=CASCADE)
 
     def __str__(self):
         # context = f'{self.title},{self.text},{self.username},{self.date}'
-        return f'{self.post.id}'
+        return f'{self.raiting}'
+
