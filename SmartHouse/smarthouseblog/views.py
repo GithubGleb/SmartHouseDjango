@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from django.db.models import Avg
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Blog, Comments, Category
 from core.models import New_profile
@@ -14,17 +16,15 @@ def raiting(post_pk):
 
 
 def posts(request):
-    blog = Blog.objects.filter(status=True)
-    rai = []
-    for i in blog:
-        comm = raiting(i.pk)
-        rai.append(comm)
+    # breakpoint()
+    #Вариант агрегации через стандартные методы без костылей
+    blog = Blog.objects.values('pk', 'title', 'date', 'date_publication', 'status', 'username__username').annotate(Avg('comments__raiting')).filter(status=True)
     cou = blog.count()
+    print(blog)
     categories = Category.objects.filter()
     context = {'items': blog,
                'category': categories,
-               'cou': cou,
-               'comm': rai,
+               'cou': cou
                }
     return render(request, 'smarthouseblog/posts.html', context)
 
@@ -63,6 +63,8 @@ def post(request, post_pk):
             comment.post = info
             comment.date = datetime.now()
             comment.save()
+            # Вариант костыля для агрегации через создание дополнительного поля в модели
+            # и перезапи значения каждый раз при пуше оценки рейтинга в форме
             Blog.objects.filter(pk=post_pk).update(raiting=raiting(post_pk))
             return redirect('post', post_pk=post_pk)
 

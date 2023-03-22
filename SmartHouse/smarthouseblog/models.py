@@ -20,12 +20,12 @@ class Blog(models.Model):
 
     def __str__(self):
         # context = f'{self.title},{self.text},{self.username},{self.date}'
-        return f'{self.title}'
+        return f'title: {self.title}, username: {self.username}'
 
 
 class Comments(models.Model):
-    post = models.ForeignKey(Blog, verbose_name='К посту', on_delete=models.CASCADE, default='2')
-    username = models.ForeignKey(New_profile, verbose_name='Юзернейм', on_delete=models.PROTECT, default='2')
+    post = models.ForeignKey(Blog, verbose_name='К посту', on_delete=models.CASCADE, related_name='comments', default='2')
+    username = models.ForeignKey(New_profile, verbose_name='Юзернейм', on_delete=models.PROTECT, default='2', related_name='users')
     date = models.DateTimeField(auto_now_add=True)
     comment = models.TextField(max_length=224, verbose_name='Коментарий')
     raiting = models.IntegerField(

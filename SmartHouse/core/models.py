@@ -3,7 +3,7 @@ from django.conf import settings
 
 
 class New_profile(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
     username = models.CharField(verbose_name='Имя пользователя', max_length=15)
     name = models.CharField(verbose_name='Имя', max_length=10)
     surname = models.CharField(verbose_name='Фамилия', max_length=20)

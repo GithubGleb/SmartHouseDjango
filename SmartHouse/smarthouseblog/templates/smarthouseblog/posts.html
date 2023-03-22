@@ -55,7 +55,10 @@
         {% if request.build_absolute_uri == 'http://127.0.0.1:8000/posts/' %}
             <div style="margin: 10px">
                 <form action="{% url 'posts_false' %}" style="width: 125px; margin: 0 auto">
-                    <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="Не опубликованные" />
+                    <input type="submit" style="border-radius: 4px;
+                                                background-color: #e5eaf5;
+                                                color: #220006"
+                           value="Не опубликованные" />
                 </form>
             </div>
         {% else %}
@@ -71,8 +74,8 @@
                     <p style="margin: 20px; font-size: 20px; color: #f3f5fa"/>Постов: {{ cou }}</p>
                 </div>
             </div>
-    <div style="margin: 0 auto">
-            {% for post in items %}
+    <div style="margin: 0 auto;  width: 1220px;">
+           {% for post in items %}
             <div style="display: inline-block;
                         margin: 10px;
                         width: 280px;
@@ -87,7 +90,8 @@
                     </a>
                         <div style="border-bottom: 1px solid"></div>
                     <div style="margin: 11px">
-                        <div style="margin-bottom: 10px">{{ post.username }}</div>
+
+                        <div style="margin-bottom: 10px">{{ post.username__username }}</div>
 
 
                     {% if post.date != post.date_publication %}
@@ -97,7 +101,7 @@
                     {% endif %}
 
 
-                        <div style="text-align: center">Рейтинг: {{ post.raiting  }}</div>
+                        <div style="text-align: center; margin: 10px">Рейтинг: {{ post.comments__raiting__avg  }}</div>
                     </div>
             </div>
             {% endfor %}
