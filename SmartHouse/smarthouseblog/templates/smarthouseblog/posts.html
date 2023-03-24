@@ -1,6 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="{ url static 'css/style.css'}">
+    <script type="text/javascript" src='{% static "js/script.js" %}'></script>
     <meta charset="UTF-8">
     <title>Блог</title>
 </head>
@@ -10,7 +13,7 @@
     text-decoration: none;
     color: #e5eaf5;
     }
-    a : hover {
+    a :hover {
     font-size: 30px;
     }
 </style>
@@ -114,7 +117,7 @@
     </div>
     </div>
 
-
-
+    <script src="{% static 'script.js' %}"></script>
+<!--    <script rel="stylesheet" href="{ url static 'js/script.js'}"></script>-->
 </body>
 </html>

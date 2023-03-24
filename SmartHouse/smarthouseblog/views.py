@@ -16,11 +16,9 @@ def raiting(post_pk):
 
 
 def posts(request):
-    # breakpoint()
     #Вариант агрегации через стандартные методы без костылей
     blog = Blog.objects.values('pk', 'title', 'date', 'date_publication', 'status', 'username__username').annotate(Avg('comments__raiting')).filter(status=True)
     cou = blog.count()
-    print(blog)
     categories = Category.objects.filter()
     context = {'items': blog,
                'category': categories,

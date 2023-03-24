@@ -1,7 +1,6 @@
 from django.db import models
 from core.models import New_profile
 
-
 class Category(models.Model):
     item = models.CharField(max_length=24, verbose_name='Категории', null=True)
 
@@ -34,6 +33,5 @@ class Comments(models.Model):
     #username = models.ForeignKey("auth.User", on_delete=CASCADE)
 
     def __str__(self):
-        # context = f'{self.title},{self.text},{self.username},{self.date}'
         return f'{self.raiting}'
 
