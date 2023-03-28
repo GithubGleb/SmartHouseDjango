@@ -1,10 +1,9 @@
 from datetime import datetime
-
-from django.db.models import Avg
+from django.db.models import Avg, Sum
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Blog, Comments, Category
-from core.models import New_profile
+from .models import Blog, Comments, Category, Cart
 from .forms import PostForm, CommentForm
+from core.models import New_profile
 
 
 def raiting(post_pk):
@@ -16,43 +15,44 @@ def raiting(post_pk):
 
 
 def posts(request):
-    #Вариант агрегации через стандартные методы без костылей
-    blog = Blog.objects.values('pk', 'title', 'date', 'date_publication', 'status', 'username__username').annotate(Avg('comments__raiting')).filter(status=True)
-    cou = blog.count()
+    # Вариант агрегации через стандартные методы без костылей
+    blog = Blog.objects.values('pk', 'title', 'date', 'date_publication', 'status', 'username__username', 'price').annotate(
+        Avg('comments__raiting')).filter(status=True)
     categories = Category.objects.filter()
     context = {'items': blog,
                'category': categories,
-               'cou': cou
+               'cou': Blog.objects.all().filter(status=True).count()
+               }
+    return render(request, 'smarthouseblog/posts.html', context)
+
+
+def posts_false(request):
+    blog = Blog.objects.values('pk', 'title', 'date', 'date_publication').annotate(Avg('comments__raiting')).filter(
+        status=False)
+    # info = Blog.objects.filter(status=False)
+    categor = Category.objects.all()
+    context = {'items': blog,
+               'category': categor,
+               'cou': Blog.objects.all().filter(status=True).count(),
                }
     return render(request, 'smarthouseblog/posts.html', context)
 
 
 def categories(request, categories_pk):
-    info = Blog.objects.filter(category=categories_pk, status=True)
+    info = Blog.objects.values('pk', 'title', 'date', 'date_publication', 'status', 'username__username', 'price').annotate(
+        Avg('comments__raiting')).filter(category=categories_pk, status=True)
     categories = Category.objects.all()
-    cou = info.count()
     context = {
         'items': info,
         'category': categories,
-        'cou': cou,
+        'cou': Blog.objects.all().filter(status=True).count(),
     }
-    return render(request, 'smarthouseblog/posts.html', context)
-
-
-def posts_false(request):
-    info = Blog.objects.filter(status=False)
-    categor = Category.objects.all()
-    cou = info.count()
-    context = {'items': info,
-               'category': categor,
-               'cou': cou}
     return render(request, 'smarthouseblog/posts.html', context)
 
 
 def post(request, post_pk):
     info = Blog.objects.get(pk=post_pk)
     comment = Comments.objects.filter(post=post_pk)
-    count_com = len(comment)
     rai = raiting(post_pk)
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
@@ -70,7 +70,7 @@ def post(request, post_pk):
         comment_form = CommentForm()
     context = {'post': info,
                'comm': comment,
-               'count_comm': count_com,
+               'count_comm': comment.count(),
                'comment_form': comment_form,
                'rai': rai,
                }
@@ -89,6 +89,7 @@ def new_post(request):
             post.username = user
             post.date = datetime.now()
             post.date_publication = datetime.now()
+            post.raiting = 0
             post.save()
             return redirect('post', post_pk=post.pk)
 
@@ -120,3 +121,25 @@ def post_publick(request, post_pk):
     post.status = True
     post.save()
     return redirect('post', post_pk=post.pk)
+
+
+def cart_add(request, product_pk):
+    product = Blog.objects.filter(pk=product_pk).first()
+    cart = Cart.objects.filter(username__username=request.user).first()
+    if cart is None:
+        user = New_profile.objects.filter(username=request.user).first()
+        cart = Cart.objects.create(username=user)
+    cart.product.add(product)
+    return redirect('cart_detail')
+
+
+def cart_detail(request):
+    cart = Cart.objects.filter(username__username=request.user).first()
+    if cart is None:
+        user = New_profile.objects.filter(username=request.user).first()
+        cart = Cart.objects.create(username=user)
+    context = {
+        'cart': cart.product.all(),
+        'summ': cart.product.aggregate(Sum('price')),
+    }
+    return render(request, 'smarthouseblog/cart_detail.html', context)

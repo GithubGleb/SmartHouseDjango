@@ -1,123 +1,95 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{ url static 'css/style.css'}">
-    <script type="text/javascript" src='{% static "js/script.js" %}'></script>
-    <meta charset="UTF-8">
-    <title>Блог</title>
-</head>
-<body style="background-color: #01241c">
-<style>
-    a {
-    text-decoration: none;
-    color: #e5eaf5;
-    }
-    a :hover {
-    font-size: 30px;
-    }
-</style>
-    <div style="position: fixed; left: 1290px">
-
-            <a href = "{% url 'posts' %}"><p style="margin: 50px; font-size: 40px; color: #f3f5fa">Категории</p></a>
-        <div style="height: 70px"></div>
-        <div style="display: inline-block;
-                        margin: 16px;
-                        position: fixed;
-                        width: 280px;
-                        height: 150px;
-                        border: 1px solid;
-                        border-radius: 10px;
-                        background-color: #220006;
-                        color: #e5eaf5;
-                        bottom: 394px">
-            <div>
-
-                {% for i in category %}
-                <div style="text-align: center;
-
-                        height: 10px;
-                        border-radius: 10px;
-                        background-color: #220006;
-                        color: #e5eaf5">
-
-                    <div style="margin: 17px; text-align: center">
-                        <a href="{% url 'categories' categories_pk=i.pk %}">{{ i }}</a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-
-        </div>
-    </div>
-    <div style="display: inline-block; margin: 1 auto; position: absolute">
-        <div style="text-align: center">
-            <a href = "{% url 'posts' %}"><p style="margin: 50px; font-size: 40px; color: #f3f5fa">Блог</p></a>
-        </div>
-
-        {% if request.build_absolute_uri == 'http://127.0.0.1:8000/posts/' %}
-            <div style="margin: 10px">
-                <form action="{% url 'posts_false' %}" style="width: 125px; margin: 0 auto">
-                    <input type="submit" style="border-radius: 4px;
-                                                background-color: #e5eaf5;
-                                                color: #220006"
-                           value="Не опубликованные" />
-                </form>
-            </div>
-        {% else %}
-
-            <div style="margin: 10px">
-                <form action="{% url 'posts' %}" style="width: 125px; margin: 0 auto">
-                    <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="Опубликованные" />
-                </form>
-            </div>
-        {% endif %}
-    <div style="margin: 10px">
-                <div style="display: inline-block; margin: 1 auto;">
-                    <p style="margin: 20px; font-size: 20px; color: #f3f5fa"/>Постов: {{ cou }}</p>
+{% load static %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <script type="text/javascript" src='{% static "js/script.js" %}'></script>
+        <meta charset="UTF-8">
+        <title>Блог</title>
+    </head>
+    <body>
+            <div style="position: fixed; left: 1000px">
+                <a class="decor" href = "{% url 'posts' %}">
+                    <p class="title-blog">Категории</p>
+                </a>
+                <div class="post-border">
+                        {% for i in category %}
+                        <div class="blog-border-center">
+                            <a class="blog-border-center decor" href="{% url 'categories' categories_pk=i.pk %}">{{ i }}</a>
+                        </div>
+                        {% endfor %}
                 </div>
             </div>
-    <div style="margin: 0 auto;  width: 1220px;">
-           {% for post in items %}
-            <div style="display: inline-block;
-                        margin: 10px;
-                        width: 280px;
-                        height: 150px;
-                        border: 1px solid;
-                        border-radius: 10px;
-                        background-color: #220006;
-                        color: #e5eaf5">
-                    <a href="{% url 'post' post_pk=post.pk %}">
-                        <div style="margin: 15px; text-align: center">{{ post.title }}</div>
-                        <div style="border-bottom: 1px solid"></div>
+            <div style="position: fixed; left: 1400px">
+                    <a class="decor" href = "{% url 'cart_detail' %}">
+                        <p class="title-blog">Корзина</p>
                     </a>
-                        <div style="border-bottom: 1px solid"></div>
-                    <div style="margin: 11px">
-
-                        <div style="margin-bottom: 10px">{{ post.username__username }}</div>
-
-
-                    {% if post.date != post.date_publication %}
-                        <div style="text-align: left">Изменено: {{ post.date_publication }}</div>
+                    {% if request.user.is_authenticated %}
+                        <div class="post-border">
+                            <div class="blog-border-center">
+                                <a> {{request.user}} </a>
+                            </div>
+                        </div>
                     {% else %}
-                        <div style="text-align: left">Размещено: {{ post.date }}</div>
+                        <div class="post-border">
+                            <div class="blog-border-center">
+                                <a> Вход </a>
+                            </div>
+                        </div>
                     {% endif %}
-
-
-                        <div style="text-align: center; margin: 10px">Рейтинг: {{ post.comments__raiting__avg  }}</div>
+                </div>
+            <div style="display: inline-block; margin: 1px auto; position: absolute">
+                <div style="height: 60px">
+                    <a class="decor" href = "{% url 'posts' %}">
+                        <p class="title-blog">Товары</p>
+                    </a>
+                </div>
+                {% if user.is_superuser %}
+                    {% if request.build_absolute_uri == 'http://127.0.0.1:8000/posts/' %}
+                        <form action="{% url 'posts_false' %}">
+                            <input class="post-button" type="submit" value="Не опубликованные" />
+                        </form>
+                    {% else %}
+                        <form action="{% url 'posts' %}">
+                            <input class="post-button" type="submit" value="Опубликованные" />
+                        </form>
+                    {% endif %}
+                {% endif %}
+            <div style="margin: 10px">
+                        <div style="display: inline-block; margin: 1px auto;">
+                            <p style="margin: 20px; font-size: 20px; color: #f3f5fa"/>Постов: {{ cou }}</p>
+                        </div>
                     </div>
+            <div style="margin: 0 auto;  width: 950px;">
+                   {% for post in items %}
+                    <div class="post-border">
+                            <a class="decor" href="{% url 'post' post_pk=post.pk %}">
+                                <div class="blog-border-center">{{ post.title }}</div>
+                                <div style="border-bottom: 1px solid"></div>
+                            </a>
+                                <div style="border-bottom: 1px solid"></div>
+                            <div style="display: inline-block;margin: 11px">
+                                <div> Цена: {{ post.price|floatformat:1}} рублей</div>
+                            <a href="{% url 'cart_add' product_pk=post.pk %}" class="fcc-btn">Добавить в корзину</a>
+                            {% if post.date != post.date_publication %}
+                                <div style="text-align: left">Изменено: {{ post.date_publication }}</div>
+                            {% else %}
+                                <div style="text-align: left">Размещено: {{ post.date }}</div>
+                            {% endif %}
+                                <div class="blog-border-center">Рейтинг: {{ post.comments__raiting__avg|floatformat:2 }}</div>
+                            </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% if user.is_superuser %}
+            <div style="margin: 10px">
+                <form action="{% url 'new_post' %}">
+                    <input type="submit" class="post-button" value="Cоздать пост" />
+                </form>
             </div>
-            {% endfor %}
-        </div>
-    <div style="margin: 10px">
-        <form action="{% url 'new_post' %}" style="width: 100px; margin: 0 auto">
-            <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006" value="Cоздать пост" />
-        </form>
-
-    </div>
-    </div>
-
-    <script src="{% static 'script.js' %}"></script>
-<!--    <script rel="stylesheet" href="{ url static 'js/script.js'}"></script>-->
-</body>
+            {% endif %}
+            </div>
+            <script src="{% static 'script.js' %}"></script>
+        <!--    <script rel="stylesheet" href="{ url static 'js/script.js'}"></script>-->
+    </body>
 </html>

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>{{ post.title }}</title>
 </head>
 <body style="background-color: #01241c">
@@ -49,7 +51,7 @@
             </div>
             <div style="border-bottom: 1px solid"></div>
             <div style="margin: 10px">
-                <div style="text-align: center">{{ post.username }}</div>
+                <div style="text-align: center">{{ post.price|floatformat:1 }} рублей</div>
             </div>
         </div>
     </div>
@@ -77,6 +79,8 @@
         </form>
             {% endif %}
     </div>
+<a href="{% url 'cart_add' product_pk=post.pk  %}" class="fcc-btn">Добавить в корзину</a>
+
     <div>
         <p style="margin: 15px; font-size: 40px; color: #f3f5fa">Коментариев: {{ count_comm }}</p>
     </div>
@@ -91,8 +95,10 @@
     background-color: #220006;
     color: #e5eaf5;
     display: inline-block;">
+
     <form style="margin: 10px" action="" method="POST"  >{% csrf_token %}
             <div style="margin: 10px">{{ comment_form }}</div>
+
         <input type="submit" style="border-radius: 4px;  background-color: #e5eaf5; color: #220006; margin: 10px" value="Отправить" />
     </form>
 </div>
