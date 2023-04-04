@@ -15,14 +15,18 @@
                 <div class="post-border">
                         {% for i in category %}
                         <div class="blog-border-center">
-                            <a class="blog-border-center decor" href="{% url 'categories' categories_pk=i.pk %}">{{ i }}</a>
+                            <a class="blog-border-center decor" href="{% url 'categories' categories_pk=i.pk %}">{{ i.item }}</a>
                         </div>
                         {% endfor %}
                 </div>
             </div>
             <div style="position: fixed; left: 1400px">
                     <a class="decor" href = "{% url 'cart_detail' %}">
+                        {% if cart_items == 0 %}
                         <p class="title-blog">Корзина</p>
+                        {% else %}
+                        <p class="title-blog">Корзина ({{cart_items}})</p>
+                        {% endif %}
                     </a>
                     {% if request.user.is_authenticated %}
                         <div class="post-border">
@@ -41,7 +45,13 @@
             <div style="display: inline-block; margin: 1px auto; position: absolute">
                 <div style="height: 60px">
                     <a class="decor" href = "{% url 'posts' %}">
-                        <p class="title-blog">Товары</p>
+                            {% if items|length == 1 %}
+                                {% for i in items %}
+                                    <p class="title-blog">{{i.category__item}}</p>
+                                {% endfor %}
+                            {% else %}
+                            <p class="title-blog">Товары</p>
+                            {% endif %}
                     </a>
                 </div>
                 {% if user.is_superuser %}
@@ -68,9 +78,16 @@
                                 <div style="border-bottom: 1px solid"></div>
                             </a>
                                 <div style="border-bottom: 1px solid"></div>
-                            <div style="display: inline-block;margin: 11px">
+                            <div style="display: inline-block;margin: 11px; width: 280px;">
                                 <div> Цена: {{ post.price|floatformat:1}} рублей</div>
+                            <div style="align-items: flex-end;
+                                      display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                      ">
                             <a href="{% url 'cart_add' product_pk=post.pk %}" class="fcc-btn">Добавить в корзину</a>
+
+                            </div>
                             {% if post.date != post.date_publication %}
                                 <div style="text-align: left">Изменено: {{ post.date_publication }}</div>
                             {% else %}
@@ -87,6 +104,7 @@
                     <input type="submit" class="post-button" value="Cоздать пост" />
                 </form>
             </div>
+
             {% endif %}
             </div>
             <script src="{% static 'script.js' %}"></script>

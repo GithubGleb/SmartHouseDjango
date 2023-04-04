@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Blog, Comments, Category, Cart
+from .models import Blog, Comments, Category, Cart, Order
 
 
 @admin.register(Blog)
@@ -22,3 +22,8 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
     list_display = ['pk', 'username']
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id', 'username', 'date_order', 'date_dilivery', 'total_price']

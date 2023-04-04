@@ -58,9 +58,9 @@ body {
 }
 
 .fcc-btn {
-  width: auto;
+  width: 200px;
   margin: 10px;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   background-color: #23785a;
   color: white;

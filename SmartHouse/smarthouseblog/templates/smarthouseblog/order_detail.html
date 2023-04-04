@@ -10,11 +10,19 @@
     </head>
     <body>
         <a class="decor" href = "{% url 'posts' %}">
-            <p class="title-blog">Корзина</p></a>
-        {% for i in cart %}
-        <div>{{ i.title }} - {{i.price}} <a class="fcc-btn" href="{% url 'cart_del' product_id=i.pk %}">Удалить</a></div>
+            <p class="title-blog">Заказ</p></a>
+        {% for order in orders %}
+        <h3>Номер заказа: {{order.id}}</h3>
+            {% for product in order.products.all %}
+            </br>{{product.title}} - {{product.price}} рублей.</br>
+
+            {% endfor %}
+        </br>Cостояние: {{order.condition}}</br>
+        <h3>Дата доставки: {{ order.date_dilivery }}</h3>
+        <h2>Итого: {{ order.total_price }}</h2>
+            <br></br>
         {% endfor %}
-        <h2>Итого: {{ summ.price__sum }}</h2>
+
         <a class="fcc-btn" href="{% url 'cart_del_all' %}">Очистить корзину</a>
         <a class="fcc-btn" href="{% url 'order' %}">Заказать</a>
     </body>
