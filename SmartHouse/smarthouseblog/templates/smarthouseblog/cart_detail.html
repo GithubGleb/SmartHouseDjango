@@ -9,13 +9,31 @@
         <link rel="stylesheet" href='{% static "css/style.css" %}'>
     </head>
     <body>
-        <a class="decor" href = "{% url 'posts' %}">
-            <p class="title-blog">Корзина</p></a>
-        {% for i in cart %}
-        <div>{{ i.title }} - {{i.price}} <a class="fcc-btn" href="{% url 'cart_del' product_id=i.pk %}">Удалить</a></div>
-        {% endfor %}
-        <h2>Итого: {{ summ.price__sum }}</h2>
-        <a class="fcc-btn" href="{% url 'cart_del_all' %}">Очистить корзину</a>
-        <a class="fcc-btn" href="{% url 'order' %}">Заказать</a>
+    <div>
+        <div style="display: inline-block;
+         margin: 1px auto;
+         position: absolute;
+         width: 750px">
+            <div><a class="decor" href = "{% url 'posts' %}">
+                    <p class="title-blog">Корзина</p></a>
+            </div>
+        </div>
+        <div style="position: fixed; left: 1000px">
+                <a class="decor" href = "{% url 'order_detail' %}">
+                    <p class="title-blog">Заказы</p>
+                </a>
+        </div>
+    </div>
+            <div style="position: relative;
+                        bottom: -150px;
+                        left: 50px;
+                        width: 700px;">
+            {% for i in cart %}
+            <div>{{ i.title }} - {{i.price}} <a class="fcc-btn" href="{% url 'cart_del' product_id=i.pk %}">Удалить</a></div>
+            {% endfor %}
+            <h2>Итого: {{ summ.price__sum }} рублей</h2>
+            <a class="fcc-btn" href="{% url 'cart_del_all' %}">Очистить корзину</a>
+            <a class="fcc-btn" href="{% url 'order' %}">Заказать</a>
+        </div>
     </body>
 </html>

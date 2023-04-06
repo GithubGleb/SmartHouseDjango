@@ -131,7 +131,7 @@ class Order(models.Model):
     )
     products = models.ManyToManyField(
         Blog,
-        related_name='products',
+        related_name='prod_orders',
     )
     condition = models.TextField(
         max_length=12,
@@ -151,4 +151,4 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return f'{self.username}, {self.products}'
+        return f'{self.username}, {self.total_price}'

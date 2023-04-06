@@ -9,21 +9,37 @@
         <link rel="stylesheet" href='{% static "css/style.css" %}'>
     </head>
     <body>
-        <a class="decor" href = "{% url 'posts' %}">
-            <p class="title-blog">Заказ</p></a>
-        {% for order in orders %}
-        <h3>Номер заказа: {{order.id}}</h3>
-            {% for product in order.products.all %}
-            </br>{{product.title}} - {{product.price}} рублей.</br>
+        <div style="display: inline-flex;
+                    justify-content: space-around;
+                    width: 1000px;">
 
+                <a class="decor" href = "{% url 'cart_detail' %}">
+                    <p class="title-blog">Заказ</p></a>
+                <div style="position: absolute; left: 1000px"><p style="height: 300px" class="title-blog">Статистика</p></a></div>
+
+
+        </div>
+            <div >
+                            <div style="display: flex;
+                                        flex-direction: column-reverse;
+                                        align-items: flex-end;
+                                        width: 1210px;
+                            ">
+                                <h2>Всего: {{all_price.total_price__sum}} рублей</h2>
+                            </div>
+                        </div>
+        <div style="margin: 20px;">
+            {% for order in orders %}
+            <h3>Номер заказа: {{order.id}}</h3>
+                {% for product in order.products.all %}
+                </br>{{product.title}} - {{product.price}} рублей.</br>
+                {% endfor %}
+            <h3>Cостояние: {{order.condition}}</h3>
+            <h3>Дата доставки: {{ order.date_dilivery }}</h3>
+            <h2>Итого: {{ order.total_price }}</h2>
+            <br>  </br>
             {% endfor %}
-        </br>Cостояние: {{order.condition}}</br>
-        <h3>Дата доставки: {{ order.date_dilivery }}</h3>
-        <h2>Итого: {{ order.total_price }}</h2>
-            <br></br>
-        {% endfor %}
-
-        <a class="fcc-btn" href="{% url 'cart_del_all' %}">Очистить корзину</a>
-        <a class="fcc-btn" href="{% url 'order' %}">Заказать</a>
+            <a class="fcc-btn" href="{% url 'statistic' %}">Заказать</a>
+        </div>
     </body>
 </html>

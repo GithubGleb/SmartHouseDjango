@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import posts, post, new_post, post_edit, post_delete, posts_false, post_publick, categories, cart_detail, \
-    cart_add, cart_del, cart_del_all, order, order_detail
+    cart_add, cart_del, cart_del_all, order, order_detail, statistic
 
 urlpatterns = [
     path('posts/', posts, name='posts'),
@@ -17,6 +17,7 @@ urlpatterns = [
     path('cart_dell_all/', cart_del_all, name='cart_del_all'),
     path('order/', order, name='order'),
     path('order_detail/', order_detail, name='order_detail'),
+    path('statistic/', statistic, name='statistic')
 ]
 #
 # if settings.DEBUG:

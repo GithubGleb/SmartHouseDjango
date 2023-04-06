@@ -5,6 +5,14 @@ from .models import Blog, Comments, Category, Cart, Order
 from .forms import PostForm, CommentForm
 from core.models import New_profile
 
+def statistic():
+    products = Blog.objects.all().filter(status=True)
+    pop_prod = {}
+    for product in products:
+        pop_prod[product.title] = product.prod_orders.all().count()
+    popular_prod = dict(sorted(pop_prod.items(), key=lambda item: -item[1]))
+    return popular_prod
+print(statistic())
 
 def raiting(post_pk):
     rai = Comments.objects.values('raiting').filter(post=post_pk).aggregate(Avg('raiting'))
@@ -18,21 +26,17 @@ def raiting(post_pk):
 def posts(request):
     # Вариант агрегации через стандартные методы без костылей
     cart = Cart.objects.filter(username__username=request.user).first()
-    print(cart.product.all())
     blog = Blog.objects.values(
         'pk', 'title', 'date', 'date_publication', 'status', 'username__username', 'price'
     ).annotate(Avg('comments__raiting')).filter(status=True)
     categor = Category.objects.values('pk', 'item')
     info = cart.product.values('title')
-    prod = Blog.objects.all().first()
-    print(prod.title)
-    info_cart = cart.product.filter(username__username=request.user)
-    print(blog)
     context = {'info_delete': info,
                'cart_items': cart.product.count(),
                'items': blog,
                'category': categor,
-               'cou': Blog.objects.values('pk').filter(status=True).count()
+               'cou': Blog.objects.values('pk').filter(status=True).count(),
+               'stat': statistic()
                }
     return render(request, 'smarthouseblog/posts.html', context)
 
@@ -183,11 +187,15 @@ def order(request):
     order = Order.objects.create(username=cart.username, total_price=total_price)
     order.products.add(*products)
     cart.product.clear()
-    print(order)
     return redirect('order_detail')
 
 
 def order_detail(request):
     orders = Order.objects.filter(username__username=request.user).order_by('-pk')
-    return render(request, 'smarthouseblog/order_detail.html', {'orders': orders})
+    context = {
+        'orders': orders,
+        'all_price': orders.aggregate(Sum('total_price'))
+    }
+    return render(request, 'smarthouseblog/order_detail.html', context)
+
 
