@@ -22,7 +22,7 @@ class Blog(models.Model):
     )
     title = models.CharField(
         max_length=48,
-        verbose_name='Титл поста'
+        verbose_name='Титл поста (Название устройства)'
     )
     text = models.TextField(
         max_length=448,

@@ -35,5 +35,6 @@ urlpatterns = [
     path('api/productinfo/v1/', ProductsView.as_view()),
     path('api/productinfo/v1/<pk>/', ProductView.as_view()),
     path('', include('smarthouseblog.urls')),
+    path('', include('APISmartHouse.urls')),
     path('', index),
 ] + r.urls

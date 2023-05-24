@@ -1,14 +1,9 @@
 from datetime import datetime
 from django.db.models import Avg, Sum
 from django.shortcuts import render, redirect, get_object_or_404
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from .models import Blog, Comments, Category, Cart, Order
 from .forms import PostForm, CommentForm
 from core.models import New_profile
-from .serializers import BlogSerializer, OrderSerializer
 from django.http import Http404
 
 
@@ -26,76 +21,8 @@ def raiting(post_pk):
     try:
         # return round(sum([int(i.raiting) for i in rai]) / rai.count(), 2)
         return round(rai['raiting__avg'], 2)
-    except:
+    except ZeroDivisionError:
         return 0
-
-
-class OrderList(APIView):
-    def get_list(self, pk):
-        try:
-            order = Order.objects.get(pk=pk)
-            return order
-        except:
-            return Http404
-
-    def get(self, request, pk, format=None):
-        snipet = self.get_list(pk)
-        serializer = OrderSerializer(snipet)
-        return Response(serializer.data)
-
-    def put(self, request, pk, format=None):
-        snipet = self.get_list(pk)
-        serializer = OrderSerializer(snipet)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, pk, request, format=None):
-        snipet = self.get_list(pk)
-        snipet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-@api_view(['GET'])
-def post_list(request, pk):
-    if request.method == 'GET':
-        blogs = Blog.objects.filter(pk=pk)
-        serializer = BlogSerializer(blogs, many=True)
-        return Response(serializer.data)
-
-
-class PostList(APIView):
-    def get_list(self, pk):
-        try:
-            return Blog.objects.get(pk=pk)
-        except Blog.DoenNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        snipet = self.get_list(pk)
-        serializer = BlogSerializer(snipet)
-        return Response(serializer.data)
-
-    def put(self, request, pk, format=None):
-        snipet = self.get_list(pk)
-        serializer = BlogSerializer(snipet)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        snipet = self.get_list(pk)
-        snipet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-# def post_lists(request):
-#     if request.method == 'GET':
-#         blogs = Blog.objects.all()
-#         serializer = BlogSerializer(blogs, many=True)
-#         return Response(serializer.data)
 
 
 def posts(request):

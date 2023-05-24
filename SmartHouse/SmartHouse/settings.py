@@ -52,7 +52,9 @@ INSTALLED_APPS = [
     'django_filters',
     # 'debug_toolbar',
     'smarthouseblog',
+    'APISmartHouse',
     'django.db.backends',
+
 
 
 

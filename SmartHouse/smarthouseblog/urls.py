@@ -1,6 +1,8 @@
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from .views import posts, post, new_post, post_edit, post_delete, posts_false, post_publick, categories, cart_detail, \
-    cart_add, cart_del, cart_del_all, order, order_detail, statistic, PostList, post_list, OrderList
+    cart_add, cart_del, cart_del_all, order, order_detail, statistic
+
 
 urlpatterns = [
     path('posts/', posts, name='posts'),
@@ -18,13 +20,4 @@ urlpatterns = [
     path('order/', order, name='order'),
     path('order_detail/', order_detail, name='order_detail'),
     path('statistic/', statistic, name='statistic'),
-    path('rest/post_lists/<pk>', PostList.as_view()),
-    path('rest/post_list/<pk>', post_list, name='post_list'),
-    path('rest/order_list/<pk>', OrderList.as_view()),
 ]
-#
-# if settings.DEBUG:
-#     import debug_toolbar
-#     urlpatterns = [
-#         path('__debug__/', include(debug_toolbar.urls)),
-#     ] + urlpatterns
